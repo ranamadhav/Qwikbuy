@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech2etc Ecommerce Tutorial</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <section id="header">
+        <a href="#"><img src="img/logo.png" class="logo" width="10" alt=""></a>
+
+        <div>
+            <ul id="navbar">
+                <li><a class="active" href="index.html">HOME</a></li>
+                <li><a href="shop.html">SHOP</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+                <li>Cart: <span id="cart-count">0</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="hero">
+        <h4>Enjoy the Offers</h4>
+        <h2>Exciting Deals</h2>
+        <h1>On all products</h1>
+        <p>Don't forget to use coupons for 20% OFF!</p>
+        <button>Buy Now</button>
+    </section>
+
+    <section id="feature" class="section-p1">
+        <div class="fe-box">
+            <img src="img/feature/f1.png" alt="">
+            <h6>Free Delivery</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="img/feature/f2.png" alt="">
+            <h6>Online Order</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="img/feature/f3.png" alt="">
+            <h6>Save Money</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="img/feature/f4.png" alt="">
+            <h6>Promotions</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="img/feature/f05.png" alt="">
+            <h6>Happy Sell</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="img/feature/f6.png" alt="">
+            <h6>Support</h6>
+        </div>
+    </section>
+    
+    <!-- Adding product -->
+
+    <section id="product1" class="section-p1">
+        <h2>Trending Products</h2>
+        <p>Latest Technology gadgets and wearables</p>
+        <div class="pro-container">
+            <div class="pro" data-id="1">
+                <img src="img/products/f01.jpg" alt="">
+                <div class="des">
+                    <span>adidas</span>
+                    <h5>cartoon astronaut t-shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$78</h4>
+                </div>
+                <a href="#" class="add-to-cart"><i class="fal fa-shopping-cart"></i></a>
+            </div>
+
+            <!-- Add more products like this -->
+            <div class="pro" data-id="2">
+                <img src="img/products/f02.jpg" alt="">
+                <div class="des">
+                    <span>Nike</span>
+                    <h5>Sport shoes</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$120</h4>
+                </div>
+                <a href="#" class="add-to-cart"><i class="fal fa-shopping-cart"></i></a>
+            </div>
+
+            <div class="pro" data-id="3">
+                <img src="img/products/f03.jpg" alt="">
+                <div class="des">
+                    <span>Apple</span>
+                    <h5>iPhone 13 Pro</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$999</h4>
+                </div>
+                <a href="#" class="add-to-cart"><i class="fal fa-shopping-cart"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- <script src="script.js"></script> -->
+</body>
+
+</html>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cartButtons = document.querySelectorAll('.add-to-cart');
+    
+        cartButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                const productElement = event.target.closest('.pro');
+                const productId = productElement.getAttribute('data-id');
+                const productName = productElement.querySelector('h5').innerText;
+                const productPrice = productElement.querySelector('h4').innerText;
+                addToCart(productId, productName, productPrice);
+            });
+        });
+    
+        function addToCart(productId, productName, productPrice) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const productIndex = cart.findIndex(product => product.id === productId);
+            if (productIndex > -1) {
+                cart[productIndex].quantity += 1;
+            } else {
+                cart.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Product added to cart!');
+            updateCartCount();
+        }
+    
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((acc, product) => acc + product.quantity, 0);
+            document.getElementById('cart-count').innerText = cartCount;
+        }
+    
+        // Initialize cart count on page load
+        updateCartCount();
+    });
+    </script>
+    
